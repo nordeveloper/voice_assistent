@@ -38,7 +38,7 @@ def do_this_command(message):
         say_message("я голосовой помошник верси 0.1, Меня создал Норайр Петросян")
 
     if "как тебя зовут" in message:
-        say_message("Меня зовут голосовой помошник")          
+        say_message("Меня зовут голосовой бот")          
     
     if "открыть youtube" in message:
         webbrowser.open('https://youtube.com')
