@@ -5,6 +5,19 @@ import playsound
 import speech_recognition as sr
 import webbrowser
 
+#commands
+commands = dict()
+commands['привет'] = 'Привет!'
+commands['как дела'] = 'дела очень хорошо'
+commands['кто ты'] = 'я голосовой помошник верси 0.2, Меня создал Норайр Петросян'
+commands['как тебя зовут'] = 'Меня зовут голосовой помошник'
+commands['раскажи анекдот'] = 'пока не научился'
+commands['открой google'] = 'https://google.com'
+commands['открой facebook'] = 'https://facebook.com'
+commands['открой yandex'] = 'https://yandex.ru'
+commands['открой youtube'] = 'https://youtube.com'
+commands['открой армянсую музыку'] = 'https://www.youtube.com/watch?v=z2gWG0Fbptw&list=PLJLbBcB--qZeBvUB9MEvnwqLVBE2rM3c6'
+
 def listen_command():
     # obtain audio from the microphone
     r = sr.Recognizer()
@@ -22,47 +35,24 @@ def listen_command():
     except sr.RequestError:
         return "ошибка"
 
-    #return input("Скажите вашу команду: ")
 
-def do_this_command(message):
-    
+def run_command(message):
+
     message = message.lower()
+    first_word = message.split()[0]
 
-    if "привет" in message:
-        say_message("Привет!")
+    if message in commands:
+        print(commands[message])
+        
+        if(first_word=='open'):
+            webbrowser.open(commands[message])
+        else:
+            say_message(commands[message])
 
-    if "как дела" in message:
-        say_message("дела очень хорошо")
-
-    if "кто ты" in message:
-        say_message("я голосовой помошник верси 0.1, Меня создал Норайр Петросян")
-
-    if "как тебя зовут" in message:
-        say_message("Меня зовут голосовой помошник")          
-    
-    if "открыть youtube" in message:
-        webbrowser.open('https://youtube.com')
-
-    if "открыть facebook" in message:
-        webbrowser.open('https://facebook.com')
-
-    if "открыть яндекс" in message:
-        webbrowser.open('https://yandex.ru')      
-
-    if "открыть google" in message:
-        webbrowser.open('https://google.com')
-
-    if "включить армянскую музыку" in message:
-        webbrowser.open('https://www.youtube.com/watch?v=o1QYvrQ7O4w&list=PLReI40KGodv7r2xNo3OsL-kIa2NvTA6Bn')
-
-    if "включить музыку" in message:
-        webbrowser.open('https://www.youtube.com/watch?v=z2gWG0Fbptw&list=PLJLbBcB--qZeBvUB9MEvnwqLVBE2rM3c6')             
-
-    if "пока" in message:
-        say_message("Пока!")
-        exit()
-    else:
-        say_message("Команда не распознана!")
+        if commands[message] == "Выход":
+            say_message("Пока!")
+            exit()    
+        
 
 def say_message(message):
     voice = gTTS(message, lang="ru")
@@ -74,4 +64,4 @@ def say_message(message):
 if __name__ == '__main__':
     while True:
         command = listen_command()
-        do_this_command(command)
+        run_command(command)
